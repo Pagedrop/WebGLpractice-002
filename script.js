@@ -61,7 +61,7 @@ class App3 {
   static get AMBIENT_LIGHT_PARAM() {
     return {
       color: 0xffffff,
-      intensity: 0.2,
+      intensity: 0.4,
     };
   }
 
@@ -70,7 +70,26 @@ class App3 {
    */
   static get MATERIAL_PARAM() {
     return {
-      color: 0x3399ff,
+      color: 0xfc6668,
+    };
+  }
+
+  /**
+   * ボックス定義の定数
+   */
+  static get BOX_PARAM() {
+    return {
+      size: 1.0,
+      maxCount: 200,
+    };
+  }
+
+  /**
+   * エリア定義の定数
+   */
+  static get AREA() {
+    return {
+      size: 40.0,
     };
   }
 
@@ -88,6 +107,7 @@ class App3 {
     this.material;
     this.boxGeometry;
     this.box;
+    this.boxArray;
     this.controls;
     this.axesHelper;
     this.directionalLightHelper;
@@ -192,10 +212,18 @@ class App3 {
     this.scene.add(this.ambientLight);
 
     // ジオメトリ
-    this.boxGeometry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
-
-    // マテリアル
-    this.material = new THREE.MeshPhongMaterial(App3.MATERIAL_PARAM);
+    this.boxGeometry = new THREE.BoxGeometry(
+      App3.BOX_PARAM.size,
+      App3.BOX_PARAM.size,
+      App3.BOX_PARAM.size
+    );
+    this.material = new THREE.MeshPhongMaterial({
+      color: App3.MATERIAL_PARAM.color,
+    });
+    for (let i = 0; i < App3.BOX_PARAM.maxCount; i++) {
+      // const rotateBox = this.
+      // getrotatebox
+    }
 
     // メッシュ
     this.box = new THREE.Mesh(this.boxGeometry, this.material);
@@ -203,6 +231,8 @@ class App3 {
 
     // OrbitControls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.autoRotate = true;
+    this.controls.autoRotateSpeed = 0.5;
 
     // ヘルパー
     // axesHelper
